@@ -506,8 +506,8 @@ class NormaliseAccessMigrationHelper
         $ID = $file->ID;
 
         // If we've pre-warmed the cache get the value from there
-        if (isset($this->cached_live_file[$ID])) {
-            return $this->cached_live_file[$ID];
+        if (isset($this->cached_live_files[$ID])) {
+            return $this->cached_live_files[$ID];
         }
 
         if ($file->isLiveVersion()) {
@@ -546,7 +546,7 @@ class NormaliseAccessMigrationHelper
             $cached[$file->ID] = $file;
         }
 
-        $this->cached_live_file = $cached;
+        $this->cached_live_files = $cached;
     }
 
     /**

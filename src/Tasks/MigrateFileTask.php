@@ -6,7 +6,6 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use SilverStripe\AssetAdmin\Helper\ImageThumbnailHelper;
-use SilverStripe\Assets\Dev\Tasks\NormaliseAccessMigrationHelper;
 use SilverStripe\Assets\Storage\AssetStore;
 use SilverStripe\Assets\Storage\FileHashingService;
 use SilverStripe\Control\Director;
