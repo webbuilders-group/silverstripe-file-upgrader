@@ -17,6 +17,7 @@ use SilverStripe\Dev\BuildTask;
 use SilverStripe\UserForms\Task\RecoverUploadLocationsHelper;
 use \Bramus\Monolog\Formatter\ColoredLineFormatter;
 use WebbuildersGroup\FileUpgrader\FixFolderPermissionsHelper;
+use WebbuildersGroup\FileUpgrader\Tasks\SecureAssetsMigrationHelper;
 
 /**
  * Migrates all 3.x file dataobjects to use the new DBFile field.
