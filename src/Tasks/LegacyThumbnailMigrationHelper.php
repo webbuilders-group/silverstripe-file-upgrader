@@ -178,7 +178,7 @@ class LegacyThumbnailMigrationHelper
                 continue;
             }
 
-            $filesystem->rename($oldResampledPath, $newResampledPath);
+            $filesystem->move($oldResampledPath, $newResampledPath);
 
             $this->logger->info(sprintf('Moved legacy thumbnail %s to %s', $oldResampledPath, $newResampledPath));
 
