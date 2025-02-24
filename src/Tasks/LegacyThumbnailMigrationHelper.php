@@ -189,13 +189,13 @@ class LegacyThumbnailMigrationHelper
         // get migrated leave the folder where it is.
         if (!$foundError) {
             $files = array_filter(
-                $filesystem->listContents($resampledFolderPath, true) ?? [],
+                $filesystem->listContents($resampledFolderPath, true)->toArray() ?? [],
                 function ($file) {
                     return $file['type'] === 'file';
                 }
             );
             if (empty($files)) {
-                $filesystem->deleteDir($resampledFolderPath);
+                $filesystem->deleteDirectory($resampledFolderPath);
             } else {
                 // This should not be possible. If it is, then there's probably a bug.
                 $this->logger->error(sprintf(

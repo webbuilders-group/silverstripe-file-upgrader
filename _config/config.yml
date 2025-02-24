@@ -1,0 +1,10 @@
+---
+Name: wbg_file_upgrader
+After: "#assetsflysystem"
+---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Assets\FilenameParsing\FileResolutionStrategy.public:
+    class: 'SilverStripe\Assets\FilenameParsing\FileIDHelperResolutionStrategy'
+    properties:
+      ResolutionFileIDHelpers:
+        - '%$WebbuildersGroup\FileUpgrader\FilenameParsing\LegacyFileIDHelper'

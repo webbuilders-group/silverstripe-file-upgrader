@@ -7,7 +7,6 @@ use Psr\Log\NullLogger;
 use SilverStripe\Assets\File;
 use SilverStripe\Assets\FilenameParsing\FileIDHelperResolutionStrategy;
 use SilverStripe\Assets\FilenameParsing\FileResolutionStrategy;
-use SilverStripe\Assets\FilenameParsing\LegacyFileIDHelper;
 use SilverStripe\Assets\Flysystem\FlysystemAssetStore;
 use SilverStripe\Assets\Folder;
 use SilverStripe\Assets\Storage\AssetStore;
@@ -22,6 +21,7 @@ use SilverStripe\ORM\DataQuery;
 use SilverStripe\ORM\DB;
 use SilverStripe\ORM\ValidationException;
 use SilverStripe\Versioned\Versioned;
+use WebbuildersGroup\FileUpgrader\FilenameParsing\LegacyFileIDHelper;
 
 /**
  * Service to help migrate File dataobjects to the new APL.

@@ -290,7 +290,7 @@ class NormaliseAccessMigrationHelper
         foreach ($this->public_folders_to_truncate as $path) {
             if ($this->canBeTruncated($path, $fs)) {
                 $this->info(sprintf('Deleting empty folder %s', $path));
-                $fs->deleteDir($path);
+                $fs->deleteDirectory($path);
                 $truncatedPaths[] = $path;
             }
         }
@@ -348,7 +348,7 @@ class NormaliseAccessMigrationHelper
         if ($path && ltrim($path ?? '', '.') && empty($fs->listContents($path))
         ) {
             $this->info(sprintf('Deleting empty folder %s', $path));
-            $fs->deleteDir($path);
+            $fs->deleteDirectory($path);
             $this->recursiveTruncate(dirname($path ?? ''), $fs);
         }
     }
