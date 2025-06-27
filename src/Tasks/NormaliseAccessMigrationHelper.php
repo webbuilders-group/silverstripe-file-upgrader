@@ -4,7 +4,7 @@ namespace WebbuildersGroup\FileUpgrader\Tasks;
 use Exception;
 use InvalidArgumentException;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use LogicException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -308,10 +308,10 @@ class NormaliseAccessMigrationHelper
     /**
      * Check if the provided folder can be deleted on this Filesystem
      * @param string $path
-     * @param FilesystemInterface $fs
+     * @param FilesystemOperator $fs
      * @return bool
      */
-    private function canBeTruncated($path, FilesystemInterface $fs)
+    private function canBeTruncated($path, FilesystemOperator $fs)
     {
         if (!$fs->has($path)) {
             // The folder doesn't exists
@@ -341,9 +341,9 @@ class NormaliseAccessMigrationHelper
     /**
      * Delete this folder if it doesn't contain any files and parent folders if they don't contain any files either.
      * @param string $path
-     * @param FilesystemInterface $fs
+     * @param FilesystemOperator $fs
      */
-    private function recursiveTruncate($path, FilesystemInterface $fs)
+    private function recursiveTruncate($path, FilesystemOperator $fs)
     {
         if ($path && ltrim($path ?? '', '.') && empty($fs->listContents($path))
         ) {

@@ -6,7 +6,7 @@ Provides tasks for upgrading the assets folder from Silverstripe 3 installs for 
 * Ed Chipman ([UndefinedOffset](https://github.com/UndefinedOffset))
 
 ## Requirements
-* Silverstripe Assets 2.0+
+* Silverstripe Assets ~3.0
 
 
 ## Installation

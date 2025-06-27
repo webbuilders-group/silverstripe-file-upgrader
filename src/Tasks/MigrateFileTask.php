@@ -1,8 +1,10 @@
 <?php
 namespace WebbuildersGroup\FileUpgrader\Tasks;
 
+use \Bramus\Monolog\Formatter\ColoredLineFormatter;
 use Monolog\Handler\FilterHandler;
 use Monolog\Handler\StreamHandler;
+use Monolog\Level;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use SilverStripe\AssetAdmin\Helper\ImageThumbnailHelper;
@@ -11,10 +13,12 @@ use SilverStripe\Assets\Storage\FileHashingService;
 use SilverStripe\Control\Director;
 use SilverStripe\Core\Environment;
 use SilverStripe\Core\Injector\Injector;
-use SilverStripe\Logging\PreformattedEchoHandler;
 use SilverStripe\Dev\BuildTask;
+use SilverStripe\Logging\PreformattedEchoHandler;
+use SilverStripe\PolyExecution\PolyOutput;
 use SilverStripe\UserForms\Task\RecoverUploadLocationsHelper;
-use \Bramus\Monolog\Formatter\ColoredLineFormatter;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 use WebbuildersGroup\FileUpgrader\FixFolderPermissionsHelper;
 use WebbuildersGroup\FileUpgrader\Tasks\SecureAssetsMigrationHelper;
 
@@ -23,9 +27,9 @@ use WebbuildersGroup\FileUpgrader\Tasks\SecureAssetsMigrationHelper;
  */
 class MigrateFileTask extends BuildTask
 {
-    private static $segment = 'MigrateFileTask';
+    protected static string $commandName = 'MigrateFileTask';
 
-    protected $title = 'Migrate File dataobjects from 3.x and successive iterations in 4.x';
+    protected string $title = 'Migrate File dataobjects from 3.x and successive iterations in 4.x';
 
     protected $defaultSubtasks = [
         'move-files',
@@ -53,11 +57,11 @@ class MigrateFileTask extends BuildTask
         parent::__construct();
     }
 
-    public function run($request)
+    public function execute(InputInterface $input, PolyOutput $output): int
     {
         $this->addLogHandlers();
 
-        $args = $request->getVars();
+        $args = $input->getOptions();
         $this->validateArgs($args);
 
         Injector::inst()->get(FileHashingService::class)->enableCache();
@@ -257,9 +261,11 @@ class MigrateFileTask extends BuildTask
         $this->extend('postFileMigration');
 
         $this->logger->info("Done!");
+
+        return Command::SUCCESS;
     }
 
-    public function getDescription()
+    static function getDescription(): string
     {
         return <<<TXT
 Imports all files referenced by File dataobjects into the new Asset Persistence Layer introduced in 4.0.
@@ -321,7 +327,7 @@ TXT;
         $formatter = new ColoredLineFormatter();
         $formatter->ignoreEmptyContextAndExtra();
 
-        $errorHandler = new StreamHandler('php://stderr', Logger::ERROR);
+        $errorHandler = new StreamHandler('php://stderr', Level::Error);
         $errorHandler->setFormatter($formatter);
 
         $standardHandler = new StreamHandler('php://stdout');
@@ -330,8 +336,8 @@ TXT;
         // Avoid double logging of errors
         $standardFilterHandler = new FilterHandler(
             $standardHandler,
-            Logger::DEBUG,
-            Logger::WARNING
+            Level::Debug,
+            Level::Warning
         );
 
         $logger->pushHandler($standardFilterHandler);
