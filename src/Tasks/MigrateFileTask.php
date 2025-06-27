@@ -1,20 +1,17 @@
 <?php
 namespace WebbuildersGroup\FileUpgrader\Tasks;
 
-use \Bramus\Monolog\Formatter\ColoredLineFormatter;
+use Bramus\Monolog\Formatter\ColoredLineFormatter;
 use Monolog\Handler\FilterHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use SilverStripe\AssetAdmin\Helper\ImageThumbnailHelper;
 use SilverStripe\Assets\Storage\AssetStore;
 use SilverStripe\Assets\Storage\FileHashingService;
-use SilverStripe\Control\Director;
 use SilverStripe\Core\Environment;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\BuildTask;
-use SilverStripe\Logging\PreformattedEchoHandler;
 use SilverStripe\PolyExecution\PolyOutput;
 use SilverStripe\UserForms\Task\RecoverUploadLocationsHelper;
 use Symfony\Component\Console\Command\Command;
@@ -49,7 +46,7 @@ class MigrateFileTask extends BuildTask
         'logger' => '%$' . LoggerInterface::class,
     ];
 
-    /** @var Logger */
+    /** @var \Psr\Log\LoggerInterface */
     private $logger;
 
     public function __construct()
